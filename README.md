@@ -9,7 +9,7 @@ Add the script before the closing `</body>` tag:
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/gh/samvrit-studio/sv-attributes/dist/sv-attributes.js"
+  src="https://cdn.jsdelivr.net/gh/samvrit-studio/sv-attributes@v1.0.0/dist/sv-attributes.js"
 ></script>
 ```
 
