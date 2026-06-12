@@ -1,5 +1,5 @@
-import { initCurrentYear } from "./sv-current-year.js";
-import { initCopyToClipboard } from "./sv-copy-to-clipboard.js";
+import { initCurrentYear } from "./current-year.js";
+import { initCopyToClipboard } from "./copy-to-clipboard.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initCurrentYear();

@@ -2,84 +2,173 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>SV Copy to Clipboard Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>SV Copy Test</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+
+      section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      button {
+        padding: 10px 16px;
+        cursor: pointer;
+      }
+
+      .is-copied {
+        background: green;
+        color: white;
+      }
+
+      .code {
+        padding: 10px;
+        background: #f5f5f5;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Copy to Clipboard Examples</h1>
+    <h1>SV Copy Test Page</h1>
+
+    <!-- ====================================== -->
+    <!-- Basic Copy -->
+    <!-- ====================================== -->
 
     <section>
-      <h2>1. Copy the trigger's own text</h2>
-      <button sv-copy="click" sv-copy-message="Copied!">
-        Copy this button's text
-      </button>
-    </section>
+      <h2>Basic Copy</h2>
 
-    <section>
-      <h2>2. Copy from a target element via selector</h2>
-      <input
-        id="email-field"
-        type="text"
-        value="hello@samvritstudio.com"
-        readonly
-      />
-      <button
-        sv-copy="click"
-        sv-copy-target="#email-field"
-        sv-copy-message="Email copied!"
-      >
-        Copy email
-      </button>
-    </section>
+      <div sv-copy-element="wrapper">
+        <div class="code" sv-copy-element="text">SAVE20</div>
 
-    <section>
-      <h2>3. Copy a literal string (not shown on page)</h2>
-      <button
-        sv-copy="click"
-        sv-copy-text="WELCOME10"
-        sv-copy-message="Code copied!"
-        sv-copy-duration="2000"
-      >
-        Copy discount code
-      </button>
-    </section>
-
-    <section>
-      <h2>4. Copy a sibling paragraph</h2>
-      <div>
-        <p id="quote">"Build once, reuse everywhere."</p>
-        <button
-          sv-copy="click"
-          sv-copy-target="#quote"
-          sv-copy-message="Quote copied!"
-        >
-          Copy quote
+        <button sv-copy-element="trigger" sv-copy-message="Copied!">
+          <span sv-copy-element="label"> Copy Coupon </span>
         </button>
       </div>
     </section>
 
+    <!-- ====================================== -->
+    <!-- Input Copy -->
+    <!-- ====================================== -->
+
     <section>
-      <h2>5. Listening for custom events</h2>
-      <button
-        id="custom-feedback"
-        sv-copy="click"
-        sv-copy-text="Custom event example"
-      >
-        Copy (custom feedback)
-      </button>
-      <p id="custom-feedback-status"></p>
+      <h2>Input Copy</h2>
+
+      <div sv-copy-element="wrapper">
+        <input sv-copy-element="text" value="hello@example.com" />
+
+        <button sv-copy-element="trigger" sv-copy-message="Copied!">
+          <span sv-copy-element="label"> Copy Email </span>
+        </button>
+      </div>
     </section>
 
-    <script type="module" src="../dist/sv-attributes.js"></script>
-    <script type="module">
-      const customTrigger = document.getElementById("custom-feedback");
-      const status = document.getElementById("custom-feedback-status");
+    <!-- ====================================== -->
+    <!-- Active Class -->
+    <!-- ====================================== -->
 
-      customTrigger.addEventListener("sv:copy:success", (event) => {
-        status.textContent = `Copied: "${event.detail.text}"`;
+    <section>
+      <h2>Active Class</h2>
+
+      <div sv-copy-element="wrapper">
+        <div class="code" sv-copy-element="text">ACTIVE-TEST</div>
+
+        <button
+          sv-copy-element="trigger"
+          sv-copy-message="Done!"
+          sv-copy-active-class="is-copied"
+          sv-copy-duration="2000"
+        >
+          <span sv-copy-element="label"> Copy With Active State </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================== -->
+    <!-- Multiple Copy Areas -->
+    <!-- ====================================== -->
+
+    <section>
+      <h2>Multiple Copy Areas</h2>
+
+      <div sv-copy-element="wrapper">
+        <div sv-copy-element="item">
+          <div class="code" sv-copy-element="text">SAVE20</div>
+
+          <button sv-copy-element="trigger" sv-copy-message="Copied!">
+            <span sv-copy-element="label"> Copy Coupon </span>
+          </button>
+        </div>
+
+        <br />
+
+        <div sv-copy-element="item">
+          <div class="code" sv-copy-element="text">hello@example.com</div>
+
+          <button sv-copy-element="trigger" sv-copy-message="Copied!">
+            <span sv-copy-element="label"> Copy Email </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================== -->
+    <!-- URL Copy -->
+    <!-- ====================================== -->
+
+    <section>
+      <h2>Copy Current URL</h2>
+
+      <button
+        sv-copy-element="trigger"
+        sv-copy-type="url"
+        sv-copy-message="URL Copied!"
+      >
+        <span sv-copy-element="label"> Copy Current URL </span>
+      </button>
+    </section>
+
+    <!-- ====================================== -->
+    <!-- Event Testing -->
+    <!-- ====================================== -->
+
+    <section>
+      <h2>Event Testing</h2>
+
+      <div sv-copy-element="wrapper">
+        <div class="code" sv-copy-element="text">EVENT-TEST</div>
+
+        <button id="event-test-btn" sv-copy-element="trigger">
+          Event Test
+        </button>
+      </div>
+
+      <p>Open browser console and verify events.</p>
+    </section>
+
+    <!-- Your built library -->
+    <script type="module" src="/src/main.js"></script>
+
+    <script>
+      const btn = document.getElementById("event-test-btn");
+
+      btn.addEventListener("sv:copy:success", (event) => {
+        console.log("SUCCESS EVENT:", event.detail.text);
       });
 
-      customTrigger.addEventListener("sv:copy:error", (event) => {
-        status.textContent = `Copy failed (${event.detail.reason})`;
+      btn.addEventListener("sv:copy:error", (event) => {
+        console.log("ERROR EVENT:", event.detail);
       });
     </script>
   </body>
