@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SV Attributes Test</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+
+      .is-copied {
+        background: green;
+        color: white;
+      }
+
+      section {
+        margin-bottom: 32px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SV Attributes Test</h1>
+
+    <!-- CURRENT YEAR -->
+
+    <section>
+      <h2>Current Year</h2>
+
+      <p>
+        Copyright ©
+        <span sv-current-year></span>
+        Samvrit Studio
+      </p>
+    </section>
+
+    <!-- BASIC COPY -->
+
+    <section>
+      <h2>Basic Copy</h2>
+
+      <div sv-copyclip-element="wrapper">
+        <div sv-copyclip-element="text">SAVE20</div>
+
+        <button sv-copyclip-element="trigger" sv-copyclip-message="Copied!">
+          <span sv-copyclip-element="label"> Copy Coupon </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- MULTIPLE ITEMS -->
+
+    <section>
+      <h2>Multiple Copy Areas</h2>
+
+      <div sv-copyclip-element="wrapper">
+        <div sv-copyclip-element="item">
+          <div sv-copyclip-element="text">SAVE20</div>
+
+          <button sv-copyclip-element="trigger">
+            <span sv-copyclip-element="label"> Copy Coupon </span>
+          </button>
+        </div>
+
+        <br />
+
+        <div sv-copyclip-element="item">
+          <div sv-copyclip-element="text">hello@example.com</div>
+
+          <button sv-copyclip-element="trigger">
+            <span sv-copyclip-element="label"> Copy Email </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- URL COPY -->
+
+    <section>
+      <h2>URL Copy</h2>
+
+      <button
+        sv-copyclip-element="trigger"
+        sv-copyclip-type="url"
+        sv-copyclip-message="URL Copied!"
+      >
+        <span sv-copyclip-element="label"> Copy URL </span>
+      </button>
+    </section>
+
+    <!-- ACTIVE CLASS -->
+
+    <section>
+      <h2>Active Class</h2>
+
+      <div sv-copyclip-element="wrapper">
+        <div sv-copyclip-element="text">ACTIVE-TEST</div>
+
+        <button
+          sv-copyclip-element="trigger"
+          sv-copyclip-message="Done!"
+          sv-copyclip-active-class="is-copied"
+          sv-copyclip-duration="2000"
+        >
+          <span sv-copyclip-element="label"> Copy With Active State </span>
+        </button>
+      </div>
+    </section>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -28,16 +28,16 @@ function o(e) {
 	return e ? e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement || e instanceof HTMLSelectElement ? e.value ?? "" : e.textContent?.trim() ?? "" : "";
 }
 function s(e) {
-	if (e.getAttribute("sv-copy-type") === "url") return window.location.href;
-	let t = e.closest("[sv-copy-element=\"item\"]");
+	if (e.getAttribute("sv-copyclip-type") === "url") return window.location.href;
+	let t = e.closest("[sv-copyclip-element=\"item\"]");
 	if (t) {
-		let e = t.querySelector("[sv-copy-element=\"text\"]");
-		return e ? o(e) : (console.warn("[sv-copy] Missing text element inside item."), "");
+		let e = t.querySelector("[sv-copyclip-element=\"text\"]");
+		return e ? o(e) : (console.warn("[sv-copyclip] Missing text element inside item."), "");
 	}
-	let n = e.closest("[sv-copy-element=\"wrapper\"]");
-	if (!n) return console.warn("[sv-copy] Trigger must be inside a wrapper."), "";
-	let r = n.querySelector("[sv-copy-element=\"text\"]");
-	return r ? o(r) : (console.warn("[sv-copy] Missing text element."), "");
+	let n = e.closest("[sv-copyclip-element=\"wrapper\"]");
+	if (!n) return console.warn("[sv-copyclip] Trigger must be inside a wrapper."), "";
+	let r = n.querySelector("[sv-copyclip-element=\"text\"]");
+	return r ? o(r) : (console.warn("[sv-copyclip] Missing text element."), "");
 }
 async function c(e) {
 	if (navigator.clipboard?.writeText) try {
@@ -58,7 +58,7 @@ async function c(e) {
 	return t.remove(), n;
 }
 function l(e) {
-	let n = Number(e.getAttribute("sv-copy-duration")) || 1500, r = e.getAttribute("sv-copy-message"), i = e.getAttribute("sv-copy-active-class"), a = e.querySelector("[sv-copy-element=\"label\"]"), o = t.get(e);
+	let n = Number(e.getAttribute("sv-copyclip-duration")) || 1500, r = e.getAttribute("sv-copyclip-message"), i = e.getAttribute("sv-copyclip-active-class"), a = e.querySelector("[sv-copyclip-element=\"label\"]"), o = t.get(e);
 	o && clearTimeout(o.timeoutId), o || t.set(e, {
 		originalLabel: a?.textContent ?? "",
 		timeoutId: null
@@ -87,7 +87,7 @@ async function u(e) {
 	t.dispatchEvent(new CustomEvent("sv:copy:success", { detail: { text: n } })), a("Copied to clipboard"), l(t);
 }
 function d() {
-	document.querySelectorAll("[sv-copy-element=\"trigger\"]").forEach((e) => {
+	document.querySelectorAll("[sv-copyclip-element=\"trigger\"]").forEach((e) => {
 		n.has(e) || (n.add(e), e.addEventListener("click", u));
 	});
 }

@@ -3,9 +3,6 @@ const INITIALIZED = new WeakSet();
 
 let liveRegion = null;
 
-/**
- * Creates a shared aria-live region for screen readers.
- */
 function getLiveRegion() {
   if (liveRegion) return liveRegion;
 
@@ -40,9 +37,6 @@ function announce(message) {
   });
 }
 
-/**
- * Gets copyable text from any supported element.
- */
 function getElementText(element) {
   if (!element) return "";
 
@@ -57,55 +51,43 @@ function getElementText(element) {
   return element.textContent?.trim() ?? "";
 }
 
-/**
- * Resolves the text to copy.
- *
- * Priority:
- * 1. sv-copy-type="url"
- * 2. nearest item text
- * 3. wrapper text fallback
- */
 function resolveCopyText(trigger) {
-  const type = trigger.getAttribute("sv-copy-type");
+  const type = trigger.getAttribute("sv-copyclip-type");
 
   if (type === "url") {
     return window.location.href;
   }
 
-  const item = trigger.closest('[sv-copy-element="item"]');
+  const item = trigger.closest('[sv-copyclip-element="item"]');
 
   if (item) {
-    const textElement = item.querySelector('[sv-copy-element="text"]');
+    const textElement = item.querySelector('[sv-copyclip-element="text"]');
 
     if (!textElement) {
-      console.warn("[sv-copy] Missing text element inside item.");
+      console.warn("[sv-copyclip] Missing text element inside item.");
       return "";
     }
 
     return getElementText(textElement);
   }
 
-  const wrapper = trigger.closest('[sv-copy-element="wrapper"]');
+  const wrapper = trigger.closest('[sv-copyclip-element="wrapper"]');
 
   if (!wrapper) {
-    console.warn("[sv-copy] Trigger must be inside a wrapper.");
+    console.warn("[sv-copyclip] Trigger must be inside a wrapper.");
     return "";
   }
 
-  const textElement = wrapper.querySelector('[sv-copy-element="text"]');
+  const textElement = wrapper.querySelector('[sv-copyclip-element="text"]');
 
   if (!textElement) {
-    console.warn("[sv-copy] Missing text element.");
+    console.warn("[sv-copyclip] Missing text element.");
     return "";
   }
 
   return getElementText(textElement);
 }
 
-/**
- * Writes text to clipboard.
- * Falls back to execCommand when Clipboard API fails.
- */
 async function writeToClipboard(text) {
   if (navigator.clipboard?.writeText) {
     try {
@@ -144,17 +126,14 @@ async function writeToClipboard(text) {
   return success;
 }
 
-/**
- * Shows success state.
- */
 function showSuccessState(trigger) {
-  const duration = Number(trigger.getAttribute("sv-copy-duration")) || 1500;
+  const duration = Number(trigger.getAttribute("sv-copyclip-duration")) || 1500;
 
-  const message = trigger.getAttribute("sv-copy-message");
+  const message = trigger.getAttribute("sv-copyclip-message");
 
-  const activeClass = trigger.getAttribute("sv-copy-active-class");
+  const activeClass = trigger.getAttribute("sv-copyclip-active-class");
 
-  const label = trigger.querySelector('[sv-copy-element="label"]');
+  const label = trigger.querySelector('[sv-copyclip-element="label"]');
 
   const existing = ACTIVE_TIMERS.get(trigger);
 
@@ -240,11 +219,8 @@ async function handleClick(event) {
   showSuccessState(trigger);
 }
 
-/**
- * Initializes SV Copy.
- */
-export function initCopyToClipboard() {
-  const triggers = document.querySelectorAll('[sv-copy-element="trigger"]');
+export function initCopyClip() {
+  const triggers = document.querySelectorAll('[sv-copyclip-element="trigger"]');
 
   triggers.forEach((trigger) => {
     if (INITIALIZED.has(trigger)) return;
