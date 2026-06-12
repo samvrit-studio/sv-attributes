@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SV Copy to Clipboard Example</title>
+  </head>
+  <body>
+    <h1>Copy to Clipboard Examples</h1>
+
+    <section>
+      <h2>1. Copy the trigger's own text</h2>
+      <button sv-copy="click" sv-copy-message="Copied!">
+        Copy this button's text
+      </button>
+    </section>
+
+    <section>
+      <h2>2. Copy from a target element via selector</h2>
+      <input
+        id="email-field"
+        type="text"
+        value="hello@samvritstudio.com"
+        readonly
+      />
+      <button
+        sv-copy="click"
+        sv-copy-target="#email-field"
+        sv-copy-message="Email copied!"
+      >
+        Copy email
+      </button>
+    </section>
+
+    <section>
+      <h2>3. Copy a literal string (not shown on page)</h2>
+      <button
+        sv-copy="click"
+        sv-copy-text="WELCOME10"
+        sv-copy-message="Code copied!"
+        sv-copy-duration="2000"
+      >
+        Copy discount code
+      </button>
+    </section>
+
+    <section>
+      <h2>4. Copy a sibling paragraph</h2>
+      <div>
+        <p id="quote">"Build once, reuse everywhere."</p>
+        <button
+          sv-copy="click"
+          sv-copy-target="#quote"
+          sv-copy-message="Quote copied!"
+        >
+          Copy quote
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Listening for custom events</h2>
+      <button
+        id="custom-feedback"
+        sv-copy="click"
+        sv-copy-text="Custom event example"
+      >
+        Copy (custom feedback)
+      </button>
+      <p id="custom-feedback-status"></p>
+    </section>
+
+    <script type="module" src="../dist/sv-attributes.js"></script>
+    <script type="module">
+      const customTrigger = document.getElementById("custom-feedback");
+      const status = document.getElementById("custom-feedback-status");
+
+      customTrigger.addEventListener("sv:copy:success", (event) => {
+        status.textContent = `Copied: "${event.detail.text}"`;
+      });
+
+      customTrigger.addEventListener("sv:copy:error", (event) => {
+        status.textContent = `Copy failed (${event.detail.reason})`;
+      });
+    </script>
+  </body>
+</html>
