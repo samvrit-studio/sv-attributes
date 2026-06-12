@@ -1,0 +1,19 @@
+{
+  "name": "sv-attributes",
+  "version": "0.1.0",
+  "description": "Reusable Webflow attributes and utilities by Samvrit Studio.",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samvrit-studio/sv-attributes.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^8.0.16"
+  }
+}
